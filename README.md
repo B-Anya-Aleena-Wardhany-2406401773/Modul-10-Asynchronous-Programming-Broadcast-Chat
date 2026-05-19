@@ -30,3 +30,15 @@ Ketika satu client mengetik pesan, server menerima pesan tersebut lalu mem-broad
 
 
 Server menggunakan `tokio::broadcast channel` untuk mendistribusikan pesan ke semuasubscriber. Setiap client yang connect akan subscribe ke channel yang sama, sehingga setiap pesan yang masuk akan diterima oleh semua client secara asynchronous.
+
+
+## Experiment 2.2: Modifying Port
+
+![Experiment 2.2](images/02.png)
+
+Port diubah dari `2000` ke `8088` karena port `8080` sudah digunakan oleh proses lain di sistem. Perubahan dilakukan di **dua tempat** sekaligus:
+
+- `server.rs` — pada `TcpListener::bind("127.0.0.1:8088")`
+- `client.rs` — pada `ClientBuilder::from_uri(Uri::from_static("ws://127.0.0.1:8088"))`
+
+Kedua sisi harus menggunakan port yang sama karena WebSocket adalah protokol connection-based, client harus tahu ke port mana ia harus connect, dan server harus listen di port yang sama. Jika salah satu tidak cocok, koneksi akan gagal.
