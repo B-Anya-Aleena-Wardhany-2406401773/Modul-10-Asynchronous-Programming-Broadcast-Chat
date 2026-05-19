@@ -22,9 +22,9 @@ async fn handle_connection(
             incoming = ws_stream.next() => {
                 match incoming {
                     Some(Ok(msg)) => {
-                        if let Some(text) = msg.as_text() {
-                            println!("From client {addr:?} \"{text}\"");
-                            bcast_tx.send(format!("{addr}: {text}"))?;
+                    if let Some(text) = msg.as_text() {
+                        println!("From client {addr:?} \"{text}\"");
+                        bcast_tx.send(format!("Anya's Computer - From server: {addr}: {text}"))?;
                         }
                     }
                     Some(Err(err)) => return Err(err.into()),

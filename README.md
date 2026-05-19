@@ -42,3 +42,20 @@ Port diubah dari `2000` ke `8088` karena port `8080` sudah digunakan oleh proses
 - `client.rs` — pada `ClientBuilder::from_uri(Uri::from_static("ws://127.0.0.1:8088"))`
 
 Kedua sisi harus menggunakan port yang sama karena WebSocket adalah protokol connection-based, client harus tahu ke port mana ia harus connect, dan server harus listen di port yang sama. Jika salah satu tidak cocok, koneksi akan gagal.
+
+## Experiment 2.3: Small Changes, Add IP and Port
+
+![Experiment 2.3](images/03.png)
+
+Modifikasi dilakukan pada `server.rs` di bagian `bcast_tx.send()` dalam fungsi
+`handle_connection`. Format pesan yang di-broadcast diubah sehingga menyertakan
+informasi pengirim:
+
+```rust
+bcast_tx.send(format!("Anya's Computer - From server: {addr}: {text}"))?;
+```
+
+Sekarang setiap pesan yang diterima client akan menampilkan IP dan Port pengirimnya,
+contohnya `Anya's Computer - From server: 127.0.0.1:57035: anya`. Ini berguna agar
+setiap client tahu dari mana pesan itu berasal, karena dalam aplikasi chat kita perlu
+tahu identitas pengirim pesan.
