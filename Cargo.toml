@@ -1,0 +1,10 @@
+[package]
+name = "broadcast-chat"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+tokio-websockets = { version = "0.9", features = ["client", "fastrand", "server", "sha1_smol"] }
+futures-util = { version = "0.3", default-features = false, features = ["sink", "std"] }
+http = "1"
